@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "481808342069",
+    "project_id": "test-8d6c3",
+    "storage_bucket": "test-8d6c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481808342069:android:204a7879b0d604e1be257c",
+        "android_client_info": {
+          "package_name": "com.example.scenes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481808342069-sn8ea10jr605kllpf897f3bah07to5m0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8Pwy8Da1sKBJltzU38YjuapPazLKwEHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481808342069-sn8ea10jr605kllpf897f3bah07to5m0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

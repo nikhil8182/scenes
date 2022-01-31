@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:scenes/GetScenesState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -107,10 +108,12 @@ class _ListViewBuilderState extends State<ListViewBuilder> {
   List toggleValues = [];
    int selectedIndex =0;
    List selectedDevices = [];
+   List selectedDevicesID = [];
    List selectedDevicesStatus = [];
    List<String> localDataVal = [];
    List<String> dumVariable = [];
    List<String> valueVariable = [];
+   List<String> valueVariableId = [];
    List<String> valueStatusList = [];
    var dataJson;
    var acount = 0;
@@ -198,6 +201,7 @@ class _ListViewBuilderState extends State<ListViewBuilder> {
              dumVariable.add(dumData[i]["Room"].toString());
              valueVariable.add(dumData[i]["Device_Name"].toString());
              valueStatusList.add(dumData[i]["Device_Status"].toString());
+             valueVariableId.add(dumData[i]['id'].toString());
            }
            localDataVal = dumVariable.toSet().toList();
            data = localDataVal;
@@ -376,7 +380,19 @@ class _ListViewBuilderState extends State<ListViewBuilder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title:Text("ListView.builder")
+          title:Text("ListView.builder"),
+        actions: [
+          // Text("Next",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+          IconButton(onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>   GetScenesState(value: selectedDevicesID)),
+            );
+
+          }, icon: Icon(Icons.skip_next_rounded))
+        ],
+
+
       ),
       body: ListView.builder(
 
@@ -386,77 +402,108 @@ class _ListViewBuilderState extends State<ListViewBuilder> {
               child: ListTile(
 
 
-              tileColor: selectedDevices.isNotEmpty?selectedDevices.contains(valueVariable[index])?Colors.green:Colors.white:Colors.white,
+              tileColor: selectedDevicesID.isNotEmpty?selectedDevicesID.contains(valueVariableId[index])?Colors.green:Colors.white:Colors.white,
                 onTap: (){
                   initial();
                   // print(data);
                   // print(name);
                   // print(valueVariable);
-                  print("valueStatusList== $valueStatusList");
+                  // print("valueID== $valueVariableId");
 
                   setState(() {
                     if(true){
-                      print(index);
+                      // print(index);
                       // print(selectedDevices[index]);
-                      print('inside  the if');
-                      print('inside  the if selectedDevices.length ${selectedDevices.length}');
-                      for(int i = 0; i <= selectedDevices.length ; i++){
-                        print("im inside the for  ");
-                        print(selectedDevices);
-                        print(index);
-                        if(selectedDevices.contains(valueVariable[index]))
+                      // print('inside  the if');
+                      // print('inside  the if selectedDevices.length ${selectedDevices.length}');
+                      for(int i = 0; i <= selectedDevicesID.length ; i++){
+                        // print("im inside the for  ");
+                        // print(selectedDevices);
+                        // print(index);
+                        if(selectedDevicesID.contains(valueVariableId[index]))
                         {
-                          print("im inside the if else ");
-                          selectedDevices.remove(valueVariable[index]);
+                          // print("im inside the if else ");
+                          // selectedDevices.remove(valueVariable[index]);
+                          selectedDevicesID.remove(valueVariableId[index]);
                           selectedDevicesStatus.remove(valueStatusList[index]);
 
                           break;
                         }else if(selectedDevices.isEmpty){
-                          print('im inside the else if - condition ');
-                          selectedDevices.add(valueVariable[index]);
-                          selectedDevicesStatus.add(valueStatusList[index]);
+                          // print('im inside the else if - condition ');
+                          // selectedDevices.add(valueVariable[index]);
+                          selectedDevicesID.add(valueVariableId[index]);
+                          selectedDevicesStatus.add({valueVariable[index]:false});
                           break;
                         }else{
-                          print("im inside the else ");
-                          selectedDevices.add(valueVariable[index]);
-                          selectedDevicesStatus.add(valueStatusList[index]);
+                          // print("im inside the else ");
+                          // selectedDevices.add(valueVariable[index]);
+                          selectedDevicesID.add(valueVariableId[index]);
+                          selectedDevicesStatus.add({valueVariable[index]:false});
 
                           break;
                         }
                       }
                     }
                     //selectedDevices.add(index);
-                    selectedIndex = index;
+                    // selectedIndex = index;
                     //selectedDevices.add(index);
 
-                    print('index = ${index}');
-                    print('selected index = $selectedIndex');
-                    print("list of selected device index = $selectedDevices");
-                    print("list of selected device index = $selectedDevicesStatus");
+                    // print('index = ${index}');
+                    // print('selected index = $selectedIndex');
+                    print("list of selected device Name = $selectedDevices");
+                    print("list of selected device ID = $selectedDevicesID");
+                    //print("list of selected device index = $selectedDeviceStateTrueList");
+                    // print("list of selected device index = $selectedDevicesStatus");
+
 
                   });
 
 
 
                 },
-                  trailing:
-                  selectedDevices.contains(valueVariable[index])?
-                  Switch(onChanged: (bool value) {
-                    setState(() {
-                      print('trail= $index');
-                      if (value){
-                        selectedDeviceStateTrueList.add(valueVariable[index]);
-                      }
-                      else{
-                        selectedDeviceStateTrueList.remove(valueVariable[index]);
-                      }
-
-
-                    });
-
-
-                  }, value: selectedDeviceStateTrueList.contains(valueVariable[index])?true:false,):null,
-                  title:Text("${valueVariable[index]}")
+                  // trailing:
+                  // selectedDevices.contains(valueVariable[index])?
+                  // Switch(onChanged: (bool value) {
+                  //   setState(() {
+                  //     print('trail= $index');
+                  //     print(" value  $value ");
+                  //     print("list of selected device index = $selectedDevices");
+                  //     //print("list of selected device index = $selectedDeviceStateTrueList");
+                  //     print("list of selected device index = $selectedDevicesStatus");
+                  //
+                  //     if (value){
+                  //       print("im inside the if ");
+                  //       print(valueVariable[index]);
+                  //       selectedDeviceStateTrueList.add(valueVariable[index]);
+                  //       print("list of selected device index = $selectedDevicesStatus");
+                  //
+                  //       var afbluik = "{${valueVariable[index]}: false}";
+                  //       print(afbluik);
+                  //       print('before if ${selectedDevicesStatus.contains(afbluik)}');
+                  //     if (selectedDevicesStatus.contains(afbluik)){
+                  //         print("valueVariable[index] = ${valueVariable[index]}");
+                  //         selectedDevicesStatus.remove({valueVariable[index]:false});
+                  //         selectedDevicesStatus.add({valueVariable[index]:value});
+                  //
+                  //       }else{
+                  //         selectedDevicesStatus.add({valueVariable[index]:value});
+                  //       }
+                  //
+                  //
+                  //     }
+                  //     else{
+                  //       selectedDeviceStateTrueList.remove(valueVariable[index]);
+                  //       selectedDevicesStatus.remove(value);
+                  //     }
+                  //
+                  //
+                  //
+                  //
+                  //   });
+                  //
+                  //
+                  // }, value: selectedDeviceStateTrueList.contains(valueVariable[index])?true:false,):null,
+                  title:Text("${valueVariable[index]} in ${dumVariable[index]}")
               ),
             );
           }
